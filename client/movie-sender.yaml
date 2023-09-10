@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: movie-sender
+spec:
+  containers:
+  - name: movie-sender
+    image: ehddnr/movie-recommand:movie-sender
+    imagePullPolicy: Always
+    env:
+    - name: REQUEST_URL
+      valueFrom:
+        secretKeyRef:
+          name: client-secret
+          key: request_url
+    - name: GITHUB_URL
+      valueFrom:
+        secretKeyRef:
+          name: client-secret
+          key: github_url
