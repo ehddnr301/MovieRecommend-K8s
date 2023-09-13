@@ -1,0 +1,58 @@
+# connect-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: connect
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: connect
+  template:
+    metadata:
+      labels:
+        app: connect
+    spec:
+      containers:
+      - name: connect
+        image: ehddnr/movie-recommand:kafka-connect
+        ports:
+        - containerPort: 8083
+        env:
+        - name: CONNECT_BOOTSTRAP_SERVERS
+          value: broker:9093
+        - name: CONNECT_REST_ADVERTISED_HOST_NAME
+          value: connect
+        - name: CONNECT_GROUP_ID
+          value: movie-connect-group
+        - name: CONNECT_CONFIG_STORAGE_TOPIC
+          value: movie-connect-configs
+        - name: CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR
+          value: "1"
+        - name: CONNECT_OFFSET_STORAGE_TOPIC
+          value: movie-connect-offsets
+        - name: CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR
+          value: "1"
+        - name: CONNECT_STATUS_STORAGE_TOPIC
+          value: movie-connect-status
+        - name: CONNECT_STATUS_STORAGE_REPLICATION_FACTOR
+          value: "1"
+        - name: CONNECT_KEY_CONVERTER
+          value: org.apache.kafka.connect.storage.StringConverter
+        - name: CONNECT_VALUE_CONVERTER
+          value: org.apache.kafka.connect.json.JsonConverter
+        - name: CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL
+          value: http://schema-registry-service:8081
+---
+# connect-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: connect-service
+spec:
+  selector:
+    app: connect
+  ports:
+    - protocol: TCP
+      port: 8083
+      targetPort: 8083

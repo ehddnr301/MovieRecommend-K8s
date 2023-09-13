@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: connector-preprocess  
+spec:
+  template:
+    spec:
+      containers:
+        - name: connector-preprocess 
+          image: ehddnr/movie-recommand:connector_preprocess 
+          imagePullPolicy: Always
+      restartPolicy: Never
+  backoffLimit: 4 # 실패 시 재시도 횟수 설정
