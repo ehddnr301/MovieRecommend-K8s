@@ -39,3 +39,7 @@ sleep 30;
 kubectl apply -f client/movie-sender.yaml
 
 kubectl apply -f client/movie-client.yaml
+
+kubectl apply -f airflow/airflow-volume.yaml
+
+kubectl apply -f airflow/airflow.yaml

@@ -8,3 +8,8 @@ echo "PROD_DATABASE_URL=postgresql+asyncpg://postgres:postgres@postgres-service:
 
 echo "REQUEST_URL=http://fastapi-service:8080/movies/" >> client/.env
 echo "GITHUB_URL=https://media.githubusercontent.com/media/ehddnr301/MovieRecommend-Csv/master/movies.csv" >> client/.env
+
+echo "AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://postgres:postgres@postgres-service-airflow:5432/postgres" >> airflow/.env
+
+echo "GF_SECURITY_ADMIN_USER=admin" >> grafana/.env
+echo "GF_SECURITY_ADMIN_PASSWORD=admin" >> grafana/.env
