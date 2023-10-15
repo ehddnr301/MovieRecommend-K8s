@@ -91,3 +91,50 @@ spec:
   - name: postgresql
     port: 5432
     targetPort: 5432
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql-airflow
+spec:
+  selector:
+    matchLabels:
+      app: postgresql-db-airflow
+  template:
+    metadata:
+      labels:
+        app: postgresql-db-airflow
+    spec:
+      containers:
+      - name: postgresql-container
+        image: postgres:15
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: db-name
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: db-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: db-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service-airflow
+spec:
+  selector:
+    app: postgresql-db-airflow
+  ports:
+  - name: postgresql
+    port: 5432
+    targetPort: 5432
