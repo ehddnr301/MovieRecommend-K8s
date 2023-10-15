@@ -38,3 +38,4 @@ sleep 30;
 
 kubectl apply -f client/movie-sender.yaml
 
+kubectl apply -f client/movie-client.yaml
