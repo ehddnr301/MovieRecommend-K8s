@@ -25,3 +25,7 @@ kubectl delete -f grafana/grafana.yaml
 kubectl delete -f airflow/airflow-volume.yaml
 
 kubectl delete -f airflow/airflow.yaml
+
+kubectl delete -f minio/minio.yaml
+
+kubectl delete -f mlflow/mlflow.yaml

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# bash create_env_file.sh
+bash create_env_file.sh
 
-# bash start_preprocessing.sh
+bash start_preprocessing.sh
 
 kubectl apply -f postgresql/postgresql.yaml
 
@@ -49,7 +49,5 @@ sleep 30;
 kubectl apply -f client/movie-sender.yaml
 
 kubectl apply -f client/movie-client.yaml
-
-kubectl apply -f airflow/airflow-volume.yaml
 
 kubectl apply -f airflow/airflow.yaml
