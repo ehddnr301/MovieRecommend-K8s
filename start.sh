@@ -1,10 +1,20 @@
 #!/bin/bash
 
-bash create_env_file.sh
+# bash create_env_file.sh
 
-bash start_secret.sh
+# bash start_preprocessing.sh
 
 kubectl apply -f postgresql/postgresql.yaml
+
+sleep 30;
+
+cd mlflow && bash create_database.sh && cd ..
+
+kubectl apply -f minio/minio.yaml
+
+sleep 10;
+
+kubectl apply -f mlflow/mlflow.yaml
 
 sleep 30;
 

@@ -109,6 +109,21 @@ spec:
                 secretKeyRef:
                   name: airflow-secret
                   key: airflow-core-sql-alchemy-conn
+            - name: MLFLOW_S3_ENDPOINT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: mlflow-secret
+                  key: mlflow-s3-endpoint-url
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: mlflow-secret
+                  key: aws-access-key-id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: mlflow-secret
+                  key: aws-secret-access-key
             - name: AIRFLOW__CORE__DAGS_FOLDER
               value: "/opt/airflow/dags/etl-dags"
           args:
