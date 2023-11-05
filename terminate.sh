@@ -16,13 +16,9 @@ kubectl delete -f kafka/connect.yaml
 
 kubectl delete -f kafka/connector_preprocess.yaml
 
-kubectl delete -f client/movie-sender.yaml
-
 kubectl delete -f client/movie-client.yaml
 
 kubectl delete -f grafana/grafana.yaml
-
-kubectl delete -f airflow/airflow-volume.yaml
 
 kubectl delete -f airflow/airflow.yaml
 
