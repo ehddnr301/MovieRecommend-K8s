@@ -14,4 +14,5 @@ export $(grep -v '^#' .env | xargs)
 kubectl create secret generic fastapi-secret \
   --from-literal=env=$ENV \
   --from-literal=test_database_url=$TEST_DATABASE_URL \
-  --from-literal=prod_database_url=$PROD_DATABASE_URL
+  --from-literal=prod_database_url=$PROD_DATABASE_URL \
+  --from-literal=mlflow_tracking_uri=$MLFLOW_TRACKING_URI
