@@ -15,6 +15,7 @@ spec:
       initContainers:
       - name: airflow-db-init
         image: ehddnr/movie-recommand:airflow
+        imagePullPolicy: Always
         command: ["airflow", "db", "init"]
         env:
         - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
@@ -24,6 +25,7 @@ spec:
               key: airflow-core-sql-alchemy-conn
       - name: airflow-users-create
         image: ehddnr/movie-recommand:airflow
+        imagePullPolicy: Always
         command: ["airflow", "users", "create", "-u", "admin", "-p", "admin", "-r", "Admin", "-e", "admin@admin.com", "-f", "admin", "-l", "admin"]
         env:
         - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
@@ -45,6 +47,8 @@ spec:
                 key: airflow-core-sql-alchemy-conn
           - name: AIRFLOW__CORE__DAGS_FOLDER
             value: "/opt/airflow/dags/etl-dags"
+          - name: AIRFLOW__API__AUTH_BACKENDS
+            value: "airflow.api.auth.backend.basic_auth"
           command: ["airflow"]
           args:
             - "webserver"
@@ -103,6 +107,7 @@ spec:
       containers:
         - name: airflow-scheduler
           image: ehddnr/movie-recommand:airflow
+          imagePullPolicy: Always
           env:
             - name: AIRFLOW__CORE__SQL_ALCHEMY_CONN
               valueFrom:
@@ -124,6 +129,11 @@ spec:
                 secretKeyRef:
                   name: mlflow-secret
                   key: aws-secret-access-key
+            - name: MLFLOW_TRACKING_URI
+              valueFrom:
+                secretKeyRef:
+                  name: fastapi-secret
+                  key: mlflow_tracking_uri
             - name: AIRFLOW__CORE__DAGS_FOLDER
               value: "/opt/airflow/dags/etl-dags"
           args:
